@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A5089CC6-4B9A-4F91-A6BD-CBD49F93D442}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D6CF9B85-0564-4E0E-91CF-7CDC2337AEBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Device", "src\Device\Device.csproj", "{865F7B67-1643-4A0F-892D-73D865F55B10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "src\Contracts\Contracts.csproj", "{875F6DC4-14EB-4D83-9FEB-308E85E0BFFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "src\Functions\Functions.csproj", "{2CD888EF-5021-441E-800B-8E0569A18C60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{C2F55B24-0EB7-485F-B5EC-7859571C384F}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\azure-resources.azcli = deploy\azure-resources.azcli
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{865F7B67-1643-4A0F-892D-73D865F55B10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{865F7B67-1643-4A0F-892D-73D865F55B10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{865F7B67-1643-4A0F-892D-73D865F55B10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{865F7B67-1643-4A0F-892D-73D865F55B10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{875F6DC4-14EB-4D83-9FEB-308E85E0BFFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{875F6DC4-14EB-4D83-9FEB-308E85E0BFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{875F6DC4-14EB-4D83-9FEB-308E85E0BFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{875F6DC4-14EB-4D83-9FEB-308E85E0BFFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CD888EF-5021-441E-800B-8E0569A18C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CD888EF-5021-441E-800B-8E0569A18C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CD888EF-5021-441E-800B-8E0569A18C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CD888EF-5021-441E-800B-8E0569A18C60}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{865F7B67-1643-4A0F-892D-73D865F55B10} = {D6CF9B85-0564-4E0E-91CF-7CDC2337AEBE}
+		{875F6DC4-14EB-4D83-9FEB-308E85E0BFFD} = {D6CF9B85-0564-4E0E-91CF-7CDC2337AEBE}
+		{2CD888EF-5021-441E-800B-8E0569A18C60} = {D6CF9B85-0564-4E0E-91CF-7CDC2337AEBE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C9098C6-28A1-4112-BB25-B1B8623901C8}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+az login
+
+az group create --name iot-hub-demo-resource-group --location westeurope
+
+az iot hub create --name adatisiothubweudev01 --resource-group iot-hub-demo-resource-group --sku F1
+
+az storage account create --name adatisiothubsaweudev01 --location westeurope --resource-group iot-hub-demo-resource-group --sku Standard_LRS
+
+az functionapp create --resource-group iot-hub-demo-resource-group --consumption-plan-location westeurope --name adatisiothubafweudev01 --storage-account adatisiothubsaweudev01
