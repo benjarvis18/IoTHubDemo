@@ -16,15 +16,23 @@ namespace Functions
 {
     public static class ReceiveTemperatureReading
     {
-        private static readonly decimal _targetTemperatureMinimum = 20;
-        private static readonly decimal _targetTemperatureMaximum = 25;
+        private static readonly double _targetTemperature = 22;
+        private static readonly double _targetTemperatureMinimum = _targetTemperature - 0.5;
+        private static readonly double _targetTemperatureMaximum = _targetTemperature + 0.5;
 
         private static readonly ServiceClient _serviceClient = ServiceClient.CreateFromConnectionString(Environment.GetEnvironmentVariable("IoTHubCloudToDeviceConnectionString"));
 
         private static async Task ChangeHeaterStateAsync(string deviceId, bool isHeaterOn)
         {
             var methodInvocation = new CloudToDeviceMethod("ChangeHeaterState") { ResponseTimeout = TimeSpan.FromSeconds(30) };
-            methodInvocation.SetPayloadJson(JsonConvert.SerializeObject(new HeaterStateChange() { IsHeaterOn = isHeaterOn }));
+            methodInvocation.SetPayloadJson(
+                JsonConvert.SerializeObject(
+                    new HeaterStateChange()
+                    {
+                        IsHeaterOn = isHeaterOn,
+                        TargetTemperatureMinimum = _targetTemperatureMinimum,
+                        TargetTemperatureMaximum = _targetTemperatureMaximum
+                    }));
 
             await _serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
         }
@@ -39,9 +47,9 @@ namespace Functions
             bool.TryParse(message.Properties["isHeaterOn"].ToString(), out bool isHeaterOn);
 
             // If the temperature is below the minimum then switch the heater on
-            if (reading.Temperature < _targetTemperatureMinimum)
+            if (reading.Temperature < _targetTemperature)
             {
-                log.LogInformation("Temperature is lower than the minimum. Turning heater on.");
+                log.LogInformation("Temperature is lower than the target. Turning heater on.");
 
                 // Switch heater on
                 if (!isHeaterOn)
@@ -50,9 +58,9 @@ namespace Functions
                 }
             }
             // If the temperature is above the maximum then switch the heater off
-            else if (reading.Temperature > _targetTemperatureMaximum)
+            else if (reading.Temperature > _targetTemperature)
             {
-                log.LogInformation("Temperature is higher than the maximum. Turning heater off.");
+                log.LogInformation("Temperature is higher than the target. Turning heater off.");
 
                 // Switch heater off
                 if (isHeaterOn)

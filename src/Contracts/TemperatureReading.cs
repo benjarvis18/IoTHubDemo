@@ -6,6 +6,12 @@ namespace Contracts
     public class TemperatureReading
     {
         [JsonProperty("temperature")]
-        public decimal Temperature { get; set; }
+        public double Temperature { get; set; }
+
+        [JsonProperty("targetTemperatureMinimum")]
+        public double TargetTemperatureMinimum { get; set; }
+
+        [JsonProperty("targetTemperatureMaximum")]
+        public double TargetTemperatureMaximum { get; set; }
     }
 }

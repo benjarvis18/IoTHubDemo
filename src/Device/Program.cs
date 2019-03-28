@@ -17,9 +17,15 @@ namespace Device
 
         private static SemaphoreSlim _semaphore = new SemaphoreSlim(1);
 
+        private static double _targetTemperatureMinimum = 21.5;
+        private static double _targetTemperatureMaximum = 22.5;
+
         private static async Task<MethodResponse> ChangeHeaterState(MethodRequest methodRequest, object userContext)
         {            
             var heaterStateChange = JsonConvert.DeserializeObject<HeaterStateChange>(Encoding.UTF8.GetString(methodRequest.Data));
+
+            _targetTemperatureMinimum = heaterStateChange.TargetTemperatureMinimum;
+            _targetTemperatureMaximum = heaterStateChange.TargetTemperatureMaximum;
 
             await _semaphore.WaitAsync();
 
@@ -39,24 +45,29 @@ namespace Device
 
         private static async Task SimulateDeviceAsync()
         {
-            var currentTemperature = 25;
+            var currentTemperature = 21d;
             var rand = new Random();
 
             while (true)
             {
                 // Get a new temperature between 1 and 5 degrees
-                var temperatureDifference = rand.Next(1, 5);
+                var temperatureDifference = Math.Round(rand.NextDouble() / 2, 2);
 
                 // If the heater is on we add the value, otherwise we subtract
                 if (!_isHeaterOn)
                 {
-                    temperatureDifference *= -1;
+                    temperatureDifference *= rand.Next(-1, 0);
                 }
 
                 currentTemperature += temperatureDifference;
 
                 // Create the message and upload to IoT Hub
-                var reading = new TemperatureReading() { Temperature = currentTemperature };
+                var reading = new TemperatureReading()
+                {
+                    Temperature = currentTemperature,
+                    TargetTemperatureMinimum = _targetTemperatureMinimum,
+                    TargetTemperatureMaximum = _targetTemperatureMaximum
+                };
 
                 string messageString = JsonConvert.SerializeObject(reading);
                 var message = new Message(Encoding.ASCII.GetBytes(messageString));
@@ -65,7 +76,7 @@ namespace Device
                 await _deviceClient.SendEventAsync(message);
                 Console.WriteLine($"{DateTime.UtcNow} - Sent Message - {messageString}");
 
-                // Wait 1 second before sending the next message
+                // Wait 2 seconds before sending the next message
                 await Task.Delay(1000);
             }
         }
