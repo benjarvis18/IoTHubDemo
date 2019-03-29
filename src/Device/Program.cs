@@ -50,7 +50,7 @@ namespace Device
 
             while (true)
             {
-                // Get a new temperature between 1 and 5 degrees
+                // Get a new temperature
                 var temperatureDifference = Math.Round(rand.NextDouble() / 2, 2);
 
                 // If the heater is on we add the value, otherwise we subtract
